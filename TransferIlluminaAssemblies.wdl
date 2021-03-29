@@ -14,8 +14,6 @@ workflow TransferIlluminaAssemblies {
         Array[File] seqyclean_summary
         Array[File] filtered_reads_1
         Array[File] filtered_reads_2
-        Array[File] raw_bam
-        Array[File] raw_bamindex
         Array[File] trimsort_bam
         Array[File] trimsort_bamindex
         Array[File] consensus
@@ -41,8 +39,6 @@ workflow TransferIlluminaAssemblies {
             seqyclean_summary = seqyclean_summary,
             filtered_reads_1 = filtered_reads_1,
             filtered_reads_2 = filtered_reads_2,
-            raw_bam = raw_bam,
-            raw_bamindex = raw_bamindex,
             trimsort_bam = trimsort_bam,
             trimsort_bamindex = trimsort_bamindex,
             consensus = consensus,
@@ -74,8 +70,6 @@ task transfer_outputs {
         Array[File] seqyclean_summary
         Array[File] filtered_reads_1
         Array[File] filtered_reads_2
-        Array[File] raw_bam
-        Array[File] raw_bamindex
         Array[File] trimsort_bam
         Array[File] trimsort_bamindex
         Array[File] consensus
@@ -102,8 +96,6 @@ task transfer_outputs {
         gsutil -m cp ~{sep=' ' seqyclean_summary} ~{outdir}/seqyclean/
         gsutil -m cp ~{sep=' ' filtered_reads_1} ~{outdir}/seqyclean/
         gsutil -m cp ~{sep=' ' filtered_reads_2} ~{outdir}/seqyclean/
-        gsutil -m cp ~{sep=' ' raw_bam} ~{outdir}/alignments/
-        gsutil -m cp ~{sep=' ' raw_bamindex} ~{outdir}/alignments/
         gsutil -m cp ~{sep=' ' trimsort_bam} ~{outdir}/alignments/
         gsutil -m cp ~{sep=' ' trimsort_bamindex} ~{outdir}/alignments/
         gsutil -m cp ~{sep=' ' consensus} ~{outdir}/assemblies/
@@ -124,8 +116,8 @@ task transfer_outputs {
 
     runtime {
         docker: "theiagen/utility:1.0"
-        memory: "1 GB"
-        cpu: 1
+        memory: "16 GB"
+        cpu: 4
         disks: "local-disk 10 SSD"
     }
 }
